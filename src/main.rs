@@ -1,26 +1,19 @@
-use std::fs::File;
-use std::io::Read;
+mod file_reader;
+mod word_count;
+
+use word_count::WordCountInput;
 
 fn main() {
-    process_file("data.txt");
-}
-
-fn process_file(file_path: &str) {
-    let mut file = match File::open(file_path) {
-        Ok(file) => file,
-        Err(e) => {
-            eprintln!("error while opening the file: {}", e);
-            return;
-        }
-    };
-
-    let mut file_content = String::new();
-    match file.read_to_string(&mut file_content) {
-        Ok(_) => {
-            println!("file read successfully");
-        }
-        Err(e) => {
-            eprintln!("error while reading contents of the file: {}", e);
-        }
-    };
+    // read file contents
+    if let Some(file_contents) = file_reader::read_file("data.txt") {
+        let word_count_input = WordCountInput {
+            bytes: true,
+            lines: true,
+            characters: true,
+            words: true,
+        };
+        // process file contents
+        let word_count_output = word_count::process_data(&file_contents, word_count_input);
+        println!("result: {:?}", word_count_output);
+    }
 }
