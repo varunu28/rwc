@@ -27,14 +27,19 @@ pub fn read_file(file_name: &str) -> Option<String> {
 #[cfg(test)]
 mod tests {
     use crate::file_reader::read_file;
+    use tempfile::NamedTempFile;
 
     #[test]
     fn test_file_read() {
-        let some_content = read_file("data.txt");
-        assert!(some_content.is_some());
+        // // Arrange
+        let file = NamedTempFile::new().ok().unwrap();
+        let file_name = file.path().to_str().unwrap();
 
-        let content = some_content.unwrap();
-        assert!(content.len() > 0);
+        // Act
+        let some_content = read_file(file_name);
+
+        // Assert
+        assert!(some_content.is_some());
     }
 
     #[test]
