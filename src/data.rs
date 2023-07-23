@@ -2,10 +2,7 @@ pub trait CustomOutput {
     fn to_custom_string(&self, word_count_input: WordCountInput, filename: &str) -> String;
 }
 
-pub trait CopyInput {
-    fn clone(&self) -> WordCountInput;
-}
-
+#[derive(Clone)]
 pub struct WordCountInput {
     pub bytes: bool,
     pub lines: bool,
@@ -42,16 +39,5 @@ impl CustomOutput for WordCountOutput {
         result.push_str(" ");
         result.push_str(filename);
         result
-    }
-}
-
-impl CopyInput for WordCountInput {
-    fn clone(&self) -> WordCountInput {
-        WordCountInput {
-            bytes: self.bytes,
-            lines: self.lines,
-            characters: self.characters,
-            words: self.words,
-        }
     }
 }

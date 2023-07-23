@@ -3,7 +3,7 @@ mod file_reader;
 mod word_count;
 
 use clap::Parser;
-use data::{CopyInput, CustomOutput, WordCountInput};
+use data::{CustomOutput, WordCountInput};
 
 trait BuildWordCountInput {
     fn build_word_count_input(&self) -> WordCountInput;
